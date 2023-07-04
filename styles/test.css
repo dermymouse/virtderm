@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+.content-pic {
+	float: left;
+	width: 60%;
+	margin: 30px 0 20px 2%;
+	padding: 20px 4% 0 0;
+	background: none;
+	border-top: none;
+	position: relative;
+}
+
+.content-qs {
+	width: 40%;
+	float: right;
+	margin-top: 30px;
+	margin-right: 1%;
+	padding-right: 1%;
+}
+
+	
+	

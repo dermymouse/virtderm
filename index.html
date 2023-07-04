@@ -1,0 +1,1079 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Virtual Dermatoscope</title>
+
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+
+<link href="styles/custom.css" rel="stylesheet" type="text/css">
+<!--<link href="styles/layout.css" rel="stylesheet" type="text/css">-->
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+/*var imageheight = $('.image').css('height');
+alert(imageheight); */
+
+var listheight = $('.list').css('height');
+//alert(listheight);
+
+$('.image').css('height', 525);
+
+
+var pos_px = listheight.indexOf("px");
+var listheightnum = listheight.substring(0, pos_px);
+//alert(listheightnum);
+
+var elementheight = 520 / 9;
+var set_num_height = 520 / 7;
+//alert (elementheight);
+
+var littlepicheight = elementheight - 14;
+var bigpicheight = Number(listheightnum);
+//alert(bigpicheight);
+
+
+// SET HEIGHT AND WIDTH OF LITTLE PICS
+$('.littlepic').css('height', littlepicheight+'px');
+$('.littlepic').css('width', littlepicheight+'px');
+
+// SET HEIGHT OF ELEMENTS
+$('li.thumb').css('height', elementheight+'px');
+$('li.set_no').css('height', set_num_height+'px');
+
+//$('.ui-link-inherit').css('height', elementheight+'px');
+
+//$('.draggable').css('height', 520+'px');
+$('.info').css('height', 520+'px');
+	
+	
+//////////////// REMOVE GREEN CLASS WHEN MENU DISPLAYED AGAIN
+
+		$('#menu').bind('pagebeforeshow',function () {
+              $('.right').removeClass('green');
+			  $('.right-move-on').removeClass('green');
+			  $('.rightdiag').removeClass('green');
+
+        });
+		
+		
+//////////////// RESET DISPLAY NONE OF EXPLANATION
+		$('#menu').bind('pageshow',function () {
+
+			  $('.exp').css("display", "none");
+
+        });
+
+
+//////////////// SHOW GREEN ANSWERS ON FIRST ANNOTATION PAGE
+		$('#case01annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case02annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case03annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case04annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case05annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case06annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case07annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case08annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		$('#case09annot').bind('pageshow',function () {
+			  $('.right').addClass('green'); 
+
+        });
+		
+		
+//////////////// REMOVE GREEN ANSWERS IF GOING BACK TO PAGE
+		$('#case01').bind('pagebeforeshow',function () {
+			  $('.right').removeClass('green');
+
+        });
+		
+	
+
+		 
+//////////////// CORRECT ANSWER - ADD GREEN CLASS
+		$('.right').tap(function() {
+			//var audio = $("#noise-yes")[0];
+ 			//yes.play();
+			
+       	    $(this).addClass('green'); 
+   		});	
+		
+		
+//////////////// CORRECT ANSWER DIAGNOSIS - ADD GREEN CLASS AND SHOW EXPLANATION
+		$('.rightdiag').tap(function() {
+			//var audio = $("#noise-yes")[0];
+ 			//yes.play();
+       	    $(this).addClass('green'); 
+			$('.exp').css("display", "inline");
+			$('.exp-button').css("display", "inline");
+   		});		
+		
+		
+	
+	
+//////////////// WRONG ANSWER - ADD RED CLASS, FADE AND REMOVE RED CLASS
+		$('.wrong').tap(function () {
+			
+		//no.play();
+	
+        $(this).addClass('red');
+		
+		$(this).animate(
+		  {
+			  opacity: 0.5}, 
+		  250, 
+		  function(){
+			  $(this).css("opacity",1);
+			  $(this).removeClass('red');
+			  } );
+         });
+		 
+		 
+/*///////////////	PUT ALL CODE FOR PAGE INITS IN HERE, SO LIST RESIZING WORKS FOR SUBSEQUENT PAGES
+$( document ).delegate("#menu", "pagebeforecreate", function() {
+
+$('.image').css('height', listheight);
+
+// SET HEIGHT AND WIDTH OF LITTLE PICS
+$('.littlepic').css('height', littlepicheight+'px');
+$('.littlepic').css('width', littlepicheight+'px');
+
+// SET HEIGHT OF ELEMENTS
+$('li').css('height', elementheight+'px');
+//$('.ui-link-inherit').css('height', elementheight+'px');
+
+$('.draggable').css('height', bigpicheight+'px');
+	
+	
+//////////////// REMOVE GREEN CLASS WHEN MENU DISPLAYED AGAIN
+
+		$('#menu').bind('pagebeforeshow',function () {
+              $('.right').removeClass('green');
+			  $('.right-move-on').removeClass('green');
+
+        });
+		
+		
+//////////////// RESET DISPLAY NONE OF EXPLANATION
+		$('#menu').bind('pageshow',function () {
+
+			  $('.exp').css("display", "none");
+
+        });
+	 });	 
+		 
+*/		 
+		 	
+	});	
+		
+	
+
+
+</script>
+
+</head>
+
+<body>
+<p></p>
+<!----------------------------------------------------------------------------------------->
+<p></p>
+<!----------------------------------------------------------------------------------------->
+<p></p>
+<!------------------------------------------ MAIN MENU ------------------------------------>
+<p></p>
+<!----------------------------------------------------------------------------------------->
+<p></p>
+<!----------------------------------------------------------------------------------------->
+<p>&nbsp;</p>
+<div id="menu" data-role="page" data-theme="a">
+<div data-role="header">
+<h1>Virtual Dermatoscope</h1>
+<!--<h1><a href="#info" class="ui-btn-left" data-role="button" data-icon="info" data-iconpos="notext" data-transition="flip">Info</a>Virtual Dermatoscope</h1>--></div>
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a padding" style="width: 30%;"><img class="image" src="images/intro2.jpg" /></div>
+<!-- end ui-block-a -->
+<div class="ui-block-b padding" style="width: 12%;">
+<ul class="list list1" data-role="listview" data-inset="true">
+<li class="set_no"><a href="index.html" rel="external">&nbsp;&nbsp;&nbsp;Set 1</a></li>
+<li class="set_no"><a href="set2.html" rel="external">&nbsp;&nbsp;&nbsp;Set 2</a></li>
+<li class="set_no"><a href="set3.html" rel="external">&nbsp;&nbsp;&nbsp;Set 3</a></li>
+<li class="set_no"><a href="set4.html" rel="external">&nbsp;&nbsp;&nbsp;Set 4</a></li>
+<li class="set_no"><a href="set5.html" rel="external">&nbsp;&nbsp;&nbsp;Set 5</a></li>
+<li class="set_no"><a href="set6.html" rel="external">&nbsp;&nbsp;&nbsp;Set 6</a></li>
+<li class="set_no"><a href="set7.html" rel="external">&nbsp;&nbsp;&nbsp;Set 7</a></li>
+</ul>
+</div>
+<!-- end ui-block-b -->
+<div class="ui-block-c padding" style="width: 58%;">
+<ul class="list" data-role="listview" data-inset="true">
+<li class="thumb"><a href="#case01"><img class="littlepic" src="images/01_thumb.jpg" />A flat pigmented lesion on a 20 year old man&rsquo;s back</a></li>
+<li class="thumb"><a href="#case02"><img class="littlepic" src="images/02_thumb.jpg" />A palpable pigmented lesion on a young girl's thigh</a></li>
+<li class="thumb"><a href="#case03"><img class="littlepic" src="images/03_thumb.jpg" />A pigmented lesion on a 10 year old girl's index finger</a></li>
+<li class="thumb"><a href="#case04"><img class="littlepic" src="images/04_thumb.jpg" />This lesion on a 40 year old woman's leg has not changed in 15 years</a></li>
+<li class="thumb"><a href="#case05"><img class="littlepic" src="images/05_thumb.jpg" />A palpable pigmented lesion on a 58 year old man's back</a></li>
+<li class="thumb"><a href="#case06"><img class="littlepic" src="images/06_thumb.jpg" />A palpable lesion on a 38 year old man&rsquo;s abdomen</a></li>
+<li class="thumb"><a href="#case07"><img class="littlepic" src="images/07_thumb.jpg" />A flat pigmented lesion on the areola</a></li>
+<li class="thumb"><a href="#case08"><img class="littlepic" src="images/08_thumb.jpg" />Rapidly growing heavily pigmented nodule. 32 year old man's abdomen</a></li>
+<li class="thumb"><a href="#case09"><img class="littlepic" src="images/09_thumb.jpg" />Large pigmented macule on face of a woman with sun-damaged skin</a></li>
+</ul>
+</div>
+<!-- end ui-block-c --></div>
+<!-- end ui-grid-a --></div>
+<div data-role="footer" data-theme="a">
+<h4>&copy; Cardiff University Department of Dermatology</h4>
+</div>
+</div>
+<!--------------------------------------------------------------------------------->
+<p></p>
+<!--------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- INFO  ------------------------------------>
+<p></p>
+<!--------------------------------------------------------------------------------->
+<p></p>
+<!--------------------------------------------------------------------------------->
+<div id="info" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header"></div>
+<div class="info" data-role="content" data-theme="a">
+<div class="info-inner">More cases available in week 8 - come back soon!</div>
+</div>
+</div>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 1  (Case 7_1) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case01" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case01annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/01.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Pigment network which stops abruptly</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton right">Regular pigment network</div>
+<div class="mybutton wrong">Pigment network with abrupt cut off</div>
+<div class="mybutton right">Symmetry of colour and structures</div>
+<div class="mybutton wrong">Asymmetry of colour and structures</div>
+<br /><br /><br /><br /><a href="#case01annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case01annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case01diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/01_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">The following features are visible:</div>
+<div class="mybutton wrong">Pigment network which stops abruptly</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton right">Regular pigment network</div>
+<div class="mybutton wrong">Pigment network with abrupt cut off</div>
+<div class="mybutton right">Symmetry of colour and structures</div>
+<div class="mybutton wrong">Asymmetry of colour and structures</div>
+<br /><br /><br /><br /><a href="#case01diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case01diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/01_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Spitz / Reed naevus</div>
+<div class="mybutton rightdiag">Reticular naevus</div>
+<div class="mybutton wrong">Seborrhoeic keratosis</div>
+<div class="mybutton wrong">Melanoma</div>
+<div class="mybutton wrong">Pigmented basal cell carcinoma</div>
+<div class="mybutton wrong">Globular naevus</div>
+<div class="exp">
+<div class="exp-inner">This is a reticular naevus with a regular pigment network that fades gradually towards the periphery. There is symmetry of colour and structures along two perpendicular axis as shown. Note also the central hyperpigmentation. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 1 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 2  (Case 7_2) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case02" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case02annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/02.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton right">Grey globules</div>
+<div class="mybutton wrong">Pigment network</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton right">Brown globules</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<br /><br /><br /><br /><a href="#case02annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case02annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case02diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/02_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Large grey globules and small brown globules are visible.</div>
+<div class="mybutton right">Grey globules</div>
+<div class="mybutton wrong">Pigment network</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton right">Brown globules</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<br /><br /><br /><br /><a href="#case02diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case02diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/02_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Reticular naevus</div>
+<div class="mybutton rightdiag">Congenital melanocytic naevus</div>
+<div class="mybutton wrong">Melanoma</div>
+<div class="mybutton wrong">Seborrhoiec keratosis</div>
+<div class="mybutton wrong">Lentigo maligna</div>
+<div class="mybutton wrong">Solar lentigo</div>
+<div class="exp">
+<div class="exp-inner">This is a congenital melanocytic naevus with a characteristic globular pattern composed of large grey and small brown globules. Note the milia-like cysts (shiny white structures) which are sometimes seen in these benign lesions. There is symmetry of colour and structures. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 2 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 3  (Case 7_3) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case03" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case03annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/03.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Reticular pigment network</div>
+<div class="mybutton wrong">Black psuedonetwork</div>
+<div class="mybutton right">Streaks</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Maple leaf-like structures</div>
+<div class="mybutton wrong">Blue-grey globules</div>
+<br /><br /><br /><br /><a href="#case03annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case03annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case03diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/03_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">The main features have been marked on the image.</div>
+<div class="mybutton wrong">Reticular pigment network</div>
+<div class="mybutton wrong">Black psuedonetwork</div>
+<div class="mybutton right">Streaks</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Maple leaf-like structures</div>
+<div class="mybutton wrong">Blue-grey globules</div>
+<br /><br /><br /><br /><a href="#case03diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case03diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/03_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Nodular melanoma</div>
+<div class="mybutton wrong">Pigmented basal cell carcinoma</div>
+<div class="mybutton wrong">Seborrhoeic keratosis</div>
+<div class="mybutton wrong">Lentigo maligna melanoma</div>
+<div class="mybutton wrong">Reticular naevus</div>
+<div class="mybutton rightdiag">Spitz / Reed naevus</div>
+<div class="exp">
+<div class="exp-inner">This is the characteristic starburst pattern of a pigmented Spitz (Reed) naevus. Note the regular radial arrangement of the streaks with a blue-black homogeneous centre. There is symmetry of colour and structures. These lesions should be excised in patients over the age of 14 years. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 3 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 4  (Case 7_4) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case04" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case04annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/04.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Blue maple leaf-like structures</div>
+<div class="mybutton wrong">Milia like cysts</div>
+<div class="mybutton right">Structureless blue pigmentation</div>
+<div class="mybutton wrong">Blue lacunas</div>
+<div class="mybutton wrong">Blue-white veil with regression</div>
+<br /><br /><br /><br /><a href="#case04annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case04annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case04diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/04_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Structureless blue pigmentation</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Blue maple leaf-like structures</div>
+<div class="mybutton wrong">Milia like cysts</div>
+<div class="mybutton right">Structureless blue pigmentation</div>
+<div class="mybutton wrong">Blue lacunas</div>
+<div class="mybutton wrong">Blue-white veil with regression</div>
+<br /><br /><br /><br /><a href="#case04diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case04diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/04_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Invasive melanoma</div>
+<div class="mybutton rightdiag">Blue naevus</div>
+<div class="mybutton wrong">Haemangioma</div>
+<div class="mybutton wrong">Pigmented basal cell carcinoma</div>
+<div class="mybutton wrong">Globular naevus</div>
+<div class="mybutton wrong">Seborrhoeic keratosis</div>
+<div class="exp">
+<div class="exp-inner">This is a blue naevus with a homogeneous structureless blue colour. A history of a stable non changing lesion (as is the case here) should be elicited to make the diagnosis. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 4 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 5  (Case 7_5) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case05" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case05annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/05.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Globular pattern</div>
+<div class="mybutton wrong">Pigment network</div>
+<div class="mybutton wrong">Blue spoke wheel-like structures</div>
+<div class="mybutton right">Milia-like cysts</div>
+<div class="mybutton wrong">Regression</div>
+<div class="mybutton right">Comedo-like openings</div>
+<br /><br /><br /><br /><a href="#case05annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case05annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case05diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/05_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Milia-like cysts and comedo-like openings</div>
+<div class="mybutton wrong">Globular pattern</div>
+<div class="mybutton wrong">Pigment network</div>
+<div class="mybutton wrong">Blue spoke wheel-like structures</div>
+<div class="mybutton right">Milia-like cysts</div>
+<div class="mybutton wrong">Regression</div>
+<div class="mybutton right">Comedo-like openings</div>
+<br /><br /><br /><br /><a href="#case05diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case05diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/05_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Nodular melanoma</div>
+<div class="mybutton wrong">Pigmented basal cell carcinoma</div>
+<div class="mybutton wrong">Haemangioma</div>
+<div class="mybutton rightdiag">Seborrhoeic keratosis</div>
+<div class="mybutton wrong">Solar lentigo</div>
+<div class="mybutton wrong">Globular naevus</div>
+<div class="exp">
+<div class="exp-inner">This lesion has brown comedo-like openings ranging in size from large openings to small ones. There are also white shiny milia-like cysts. These are hallmark features of seborrhoeic keratosis. Notice the lack of pigment network signifying that the lesion is non-melanocytic. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 5 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 6  (Case 7_6) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case06" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case06annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/06.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton right">Reticular pigment network</div>
+<div class="mybutton wrong">Atypical pigment network</div>
+<div class="mybutton wrong">Red lacunas</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton right">Typical pigment network</div>
+<br /><br /><br /><br /><a href="#case06annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case06annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case06diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/06_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Typical reticular pigment network</div>
+<div class="mybutton right">Reticular pigment network</div>
+<div class="mybutton wrong">Atypical pigment network</div>
+<div class="mybutton wrong">Red lacunas</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton right">Typical pigment network</div>
+<br /><br /><br /><br /><a href="#case06diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case06diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/06_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Hypomelanotic melanoma</div>
+<div class="mybutton wrong">Superficial basal cell carcinoma</div>
+<div class="mybutton wrong">Solar lentigo</div>
+<div class="mybutton wrong">Reticular naevus</div>
+<div class="mybutton rightdiag">Compound naevus</div>
+<div class="mybutton wrong">Globular naevus</div>
+<div class="exp">
+<div class="exp-inner">This is a compound melanocytic naevus with a structureless central area of hypopigmentation representing the elevated (palpable) dermal component of the naevus. The peripheral rim has a typical reticular pigment network that fades gradually represents the flat junctional component of the naevus. Note the symmetry of colour and structures. This type of naevus is often described as the &lsquo;fried-egg&rsquo; pattern. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+<!-- ui-block-b --></div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 6 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 07  (Case 7_7) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case07" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case07annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/07.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton wrong">Atypical pigment network</div>
+<div class="mybutton right">Reticular pigment network</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Blue-white veil</div>
+<div class="mybutton wrong">Moth-eaten border</div>
+<br /><br /><br /><br /><a href="#case07annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case07annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case07diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/07_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Reticular pigment network</div>
+<div class="mybutton wrong">Brown pseudonetwork</div>
+<div class="mybutton wrong">Atypical pigment network</div>
+<div class="mybutton right">Reticular pigment network</div>
+<div class="mybutton wrong">Comedo-like openings</div>
+<div class="mybutton wrong">Blue-white veil</div>
+<div class="mybutton wrong">Moth-eaten border</div>
+<br /><br /><br /><br /><a href="#case07diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case07diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/07_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Reticular seborrhoeic keratosis</div>
+<div class="mybutton wrong">Solar lentigo</div>
+<div class="mybutton rightdiag">Reticular melanocytic naevus</div>
+<div class="mybutton wrong">Superficial melanoma</div>
+<div class="mybutton wrong">Pigmented actinic keratosis</div>
+<div class="mybutton wrong">Spitz /Reed naevus</div>
+<div class="exp">
+<div class="exp-inner">This is a reticular melanocytic naevus on the areola with a prominent but regular pigment network. Note the symmetry of colour and structures. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 07 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 08  (Case 7_8) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case08" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case08annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/08.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton wrong">Network</div>
+<div class="mybutton wrong">Irregular blotches</div>
+<div class="mybutton right">Lacunas</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton wrong">Structureless blue pattern</div>
+<div class="mybutton wrong">Spoke wheel-like structures</div>
+<br /><br /><br /><br /><a href="#case08annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case08annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case08diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/08_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Lacunas</div>
+<div class="mybutton wrong">Network</div>
+<div class="mybutton wrong">Irregular blotches</div>
+<div class="mybutton right">Lacunas</div>
+<div class="mybutton wrong">Streaks</div>
+<div class="mybutton wrong">Structureless blue pattern</div>
+<div class="mybutton wrong">Spoke wheel-like structures</div>
+<br /><br /><br /><br /><a href="#case08diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case08diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/08_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Nodular melanoma</div>
+<div class="mybutton wrong">Blue naevus</div>
+<div class="mybutton wrong">Pigmented basal cell carcinoma</div>
+<div class="mybutton rightdiag">Haemangioma</div>
+<div class="mybutton wrong">Black naevus</div>
+<div class="mybutton wrong">Metastatic melanoma</div>
+<div class="exp">
+<div class="exp-inner"><br />This is a haemangioma with characteristic sharply demarcated blue-purple globules of varying sizes known as lacunas <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 08 -->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!-------------------------------------- CASE 09  (Case 7_9) ------------------------------------>
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<p></p>
+<!---------------------------------------------------------------------------------------------->
+<div id="case09" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case09annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></h1>
+</div>
+<!--<div data-role="content" data-theme="a" class="picFrame">-->
+<div data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><!--NB the width of the photo in CSS also has to be 70% --><img class="draggable" src="images/09.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">What dermoscopic features can you see?</div>
+<div class="mybutton right">Brown pseudonetwork</div>
+<div class="mybutton wrong">Milia-like cysts</div>
+<div class="mybutton wrong">Grey pseudonetwork</div>
+<div class="mybutton wrong">Irregular blotches</div>
+<div class="mybutton wrong">Parallel ridge pattern</div>
+<div class="mybutton wrong">White areas of regression</div>
+<br /><br /><br /><br /><a href="#case09annot" data-role="button" data-icon="arrow-r" data-iconpos="right">Check Answers</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case09annot" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Features<a class="ui-btn-right" href="#case09diag" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/09_annot.jpg" /></div>
+<div class="ui-block-b " style="width: 30%;">
+<div class="padding">Brown pseudonetwork</div>
+<div class="mybutton right">Brown pseudonetwork</div>
+<div class="mybutton wrong">Milia-like cysts</div>
+<div class="mybutton wrong">Grey pseudonetwork</div>
+<div class="mybutton wrong">Irregular blotches</div>
+<div class="mybutton wrong">Parallel ridge pattern</div>
+<div class="mybutton wrong">White areas of regression</div>
+<br /><br /><br /><br /><a href="#case09diag" data-role="button" data-icon="arrow-r" data-iconpos="right">Diagnosis</a></div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<div id="case09diag" data-role="page" data-theme="a" data-add-back-btn="true" data-back-btn-text="Back">
+<div data-role="header">
+<h1>Diagnosis<a class="ui-btn-right" href="#menu" data-role="button" data-add-back-btn="true" data-back-btn-text="Back" data-icon="arrow-r" data-iconpos="right">Main Menu</a></h1>
+</div>
+<div class="picFrame" data-role="content" data-theme="a">
+<div class="ui-grid-a">
+<div class="ui-block-a" style="width: 70%;"><img class="draggable" src="images/09_annot.jpg" /></div>
+<div class="ui-block-b padding" style="width: 30%;">
+<div class="padding">What is your diagnosis?</div>
+<div class="mybutton wrong">Dermatofibroma</div>
+<div class="mybutton wrong">Pigmented actinic keratosis</div>
+<div class="mybutton wrong">Seborrhoeic keratosis</div>
+<div class="mybutton wrong">Melanoma-in-situ</div>
+<div class="mybutton rightdiag">Solar lentigo</div>
+<div class="mybutton wrong">Melanocytic naevus</div>
+<div class="exp">
+<div class="exp-inner"><!-- <br />-->There is brown pigmentation with hypopigmented areas (marked) corresponding to follicular openings resulting in a pseudonetwork. This together with a sharply demarcated border indicated by the yellow arrows (also known as the &lsquo;jelly sign&rsquo;) is a characteristic feature of solar lentigo. <br /><br /><a href="#menu" data-role="button" data-icon="arrow-r" data-iconpos="right">Main Menu</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- /grid-a --></div>
+<!-- content -->
+<p></p>
+<!-- END OF CASE 09 -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div>-->
+<p></p>
+<!-- page -->
+<p></p>
+<!--    <div data-role="footer" data-theme="a">
+    	<h4>&copy; Cardiff University Department of Dermatology</h4>
+    </div-->
+<p></p>
+<!-- page -->
+<p></p>
+</body>
+</html>
